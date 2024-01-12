@@ -7,7 +7,6 @@ defmodule Blackboard do
     {b, a}
   end
 
-  def are_equal(a, b) do
-    a == b
-  end
+  def are_equal(a, a), do: true
+  def are_equal(_, _), do: false
 end
