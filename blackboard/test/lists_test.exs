@@ -9,4 +9,12 @@ defmodule ListsTest do
   test "length of non-empty list" do
     assert Lists.len([1, 2, 3]) == 3
   end
+
+  test "sum of empty list" do
+    assert Lists.sum([]) == 0
+  end
+
+  test "sum of non-empty list" do
+    assert Lists.sum([1, 2, 3]) == 6
+  end
 end
