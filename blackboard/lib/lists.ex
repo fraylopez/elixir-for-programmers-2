@@ -7,4 +7,10 @@ defmodule Lists do
 
   def square([]), do: []
   def square([head | tail]), do: [head * head | square(tail)]
+
+  def double([]), do: []
+  def double([head | tail]), do: [head * 2 | double(tail)]
+
+  def map([], _fun), do: []
+  def map([head | tail], fun), do: [fun.(head) | map(tail, fun)]
 end

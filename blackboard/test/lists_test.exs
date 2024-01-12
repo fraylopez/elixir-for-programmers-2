@@ -25,4 +25,20 @@ defmodule ListsTest do
   test "square of non-empty list" do
     assert Lists.square([1, 2, 3]) == [1, 4, 9]
   end
+
+  test "double of empty list" do
+    assert Lists.double([]) == []
+  end
+
+  test "double of non-empty list" do
+    assert Lists.double([1, 2, 3]) == [2, 4, 6]
+  end
+
+  test "map of empty list" do
+    assert Lists.map([], fn x -> x * 2 end) == []
+  end
+
+  test "map of non-empty list" do
+    assert Lists.map([1, 2, 3], fn x -> x * 2 end) == [2, 4, 6]
+  end
 end
