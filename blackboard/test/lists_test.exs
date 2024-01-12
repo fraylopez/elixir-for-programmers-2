@@ -17,4 +17,12 @@ defmodule ListsTest do
   test "sum of non-empty list" do
     assert Lists.sum([1, 2, 3]) == 6
   end
+
+  test "square of empty list" do
+    assert Lists.square([]) == []
+  end
+
+  test "square of non-empty list" do
+    assert Lists.square([1, 2, 3]) == [1, 4, 9]
+  end
 end
