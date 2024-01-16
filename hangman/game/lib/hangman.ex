@@ -8,6 +8,5 @@ defmodule Hangman do
   defdelegate new, to: Game
 
   @spec make_guess(game, String.t()) :: {game, Type.tally()}
-  def make_guess(_game, _guess) do
-  end
+  defdelegate make_guess(game, guess), to: Game
 end
