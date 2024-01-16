@@ -15,4 +15,9 @@ defmodule HangmanTest do
     game = Hangman.Impl.Game.new("test")
     assert game.letters == ["t", "e", "s", "t"]
   end
+
+  test "all letters are lowercase ASCII characters" do
+    game = Hangman.Impl.Game.new()
+    assert Enum.all?(game.letters, fn letter -> letter >= "a" && letter <= "z" end)
+  end
 end
