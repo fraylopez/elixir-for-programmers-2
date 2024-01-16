@@ -1,6 +1,8 @@
-defmodule Game do
+defmodule Hangman do
+  alias Hangman.Impl.Game
+
   @type state :: :initializing | :won | :lost | :good_guess | :bad_guess | :already_used
-  @type game :: any
+  @opaque game :: Game.t()
   @type tally :: %{
           turns_left: integer,
           game_state: state,
@@ -9,8 +11,7 @@ defmodule Game do
         }
 
   @spec new() :: game
-  def new do
-  end
+  defdelegate new, to: Game
 
   @spec make_guess(game, String.t()) :: {game, tally}
   def make_guess(_game, _guess) do
