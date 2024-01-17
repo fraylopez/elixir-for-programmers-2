@@ -25,7 +25,7 @@ defmodule HangmanTest do
     for state <- [:won, :lost] do
       game = Hangman.new()
       game = Map.put(game, :game_state, state)
-      {new_game, tally} = Hangman.make_guess(game, "t")
+      {new_game, _tally} = Hangman.make_guess(game, "t")
       assert new_game == game
     end
   end
@@ -59,5 +59,35 @@ defmodule HangmanTest do
     assert new_game.game_state == :good_guess
     {new_game, _tally} = Hangman.make_guess(game, "r")
     assert new_game.game_state == :bad_guess
+  end
+
+  # hello
+  test "can handle a sequence of guesses" do
+    [
+      ["a", :bad_guess, 6, ["_", "_", "_", "_", "_"], ["a"]],
+      ["a", :already_used, 6, ["_", "_", "_", "_", "_"], ["a"]],
+      ["e", :good_guess, 6, ["_", "e", "_", "_", "_"], ["a", "e"]],
+      ["x", :bad_guess, 5, ["_", "e", "_", "_", "_"], ["a", "e", "x"]]
+    ]
+    |> test_sequence()
+  end
+
+  def test_sequence(script) do
+    game = Hangman.new("hello")
+    Enum.reduce(script, game, &check_one_guess/2)
+  end
+
+  defp check_one_guess(
+         [guess, expected_state, expected_turns_left, expected_letters, expected_used],
+         game
+       ) do
+    {game, tally} = Hangman.make_guess(game, guess)
+
+    assert tally.turns_left == expected_turns_left
+    assert tally.game_state == expected_state
+    assert tally.letters == expected_letters
+    assert tally.used == expected_used
+
+    game
   end
 end
