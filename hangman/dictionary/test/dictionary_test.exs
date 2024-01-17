@@ -3,6 +3,7 @@ defmodule DictionaryTest do
   doctest Dictionary
 
   test "generates a random word" do
-    assert Dictionary.random_word() !== nil
+    random_word = Dictionary.start() |> Dictionary.random_word()
+    assert random_word !== nil
   end
 end

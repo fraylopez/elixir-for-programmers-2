@@ -1,10 +1,7 @@
 defmodule Dictionary do
-  @word_list "assets/words.txt"
-             |> File.read!()
-             |> String.split("\n", trim: true)
-
-  def random_word do
-    @word_list
-    |> Enum.random()
-  end
+  alias Dictionary.Impl.WordList
+  @spec start() :: [String.t()]
+  defdelegate start, to: WordList
+  @spec random_word(word_list :: [String.t()]) :: String.t()
+  defdelegate random_word(word_list), to: WordList
 end
