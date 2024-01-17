@@ -46,4 +46,18 @@ defmodule HangmanTest do
     {new_game, _tally} = Hangman.make_guess(new_game, "t")
     assert new_game.game_state == :already_used
   end
+
+  test "correct guesses are scored" do
+    game = Hangman.new("test")
+    {new_game, _tally} = Hangman.make_guess(game, "t")
+    assert new_game.game_state == :good_guess
+  end
+
+  test "incorrect guesses are scored" do
+    game = Hangman.new("test")
+    {new_game, _tally} = Hangman.make_guess(game, "t")
+    assert new_game.game_state == :good_guess
+    {new_game, _tally} = Hangman.make_guess(game, "r")
+    assert new_game.game_state == :bad_guess
+  end
 end
