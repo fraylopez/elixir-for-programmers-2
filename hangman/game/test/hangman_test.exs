@@ -61,13 +61,25 @@ defmodule HangmanTest do
     assert new_game.game_state == :bad_guess
   end
 
-  # hello
   test "can handle a sequence of guesses" do
     [
       ["a", :bad_guess, 6, ["_", "_", "_", "_", "_"], ["a"]],
       ["a", :already_used, 6, ["_", "_", "_", "_", "_"], ["a"]],
       ["e", :good_guess, 6, ["_", "e", "_", "_", "_"], ["a", "e"]],
       ["x", :bad_guess, 5, ["_", "e", "_", "_", "_"], ["a", "e", "x"]]
+    ]
+    |> test_sequence()
+  end
+
+  test "can handle a winning game" do
+    [
+      ["a", :bad_guess, 6, ["_", "_", "_", "_", "_"], ["a"]],
+      ["a", :already_used, 6, ["_", "_", "_", "_", "_"], ["a"]],
+      ["h", :good_guess, 6, ["h", "_", "_", "_", "_"], ["a", "h"]],
+      ["e", :good_guess, 6, ["h", "e", "_", "_", "_"], ["a", "e", "h"]],
+      ["x", :bad_guess, 5, ["h", "e", "_", "_", "_"], ["a", "e", "h", "x"]],
+      ["l", :good_guess, 5, ["h", "e", "l", "l", "_"], ["a", "e", "h", "l", "x"]],
+      ["o", :won, 5, ["h", "e", "l", "l", "o"], ["a", "e", "h", "l", "o", "x"]]
     ]
     |> test_sequence()
   end
