@@ -16,7 +16,9 @@ defmodule Hangman.Impl.Game do
 
   @spec new() :: t
   def new do
-    Dictionary.random_word() |> new()
+    Dictionary.start()
+    |> Dictionary.random_word()
+    |> new()
   end
 
   @spec new(String.t()) :: t

@@ -3,13 +3,15 @@ defmodule Dictionary.Impl.WordList do
 
   @spec word_list() :: t
   def word_list() do
-    "assets/words.txt"
+    "../../assets/words.txt"
+    |> Path.expand(__DIR__)
     |> File.read!()
     |> String.split("\n", trim: true)
   end
 
   @spec random_word(t) :: String.t()
   def random_word(word_list) do
-    word_list |> Enum.random()
+    word_list
+    |> Enum.random()
   end
 end
