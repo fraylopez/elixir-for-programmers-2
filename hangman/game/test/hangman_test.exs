@@ -3,7 +3,7 @@ defmodule HangmanTest do
   doctest Hangman
 
   test "creates a new game" do
-    game = Hangman.Impl.Game.new()
+    game = Hangman.new()
     assert game.letters != nil
     assert length(game.letters) > 0
     assert game.turns_left == 7
@@ -12,18 +12,18 @@ defmodule HangmanTest do
   end
 
   test "creates a new game with provided word" do
-    game = Hangman.Impl.Game.new("test")
+    game = Hangman.new("test")
     assert game.letters == ["t", "e", "s", "t"]
   end
 
   test "all letters are lowercase ASCII characters" do
-    game = Hangman.Impl.Game.new()
+    game = Hangman.new()
     assert Enum.all?(game.letters, fn letter -> letter >= "a" && letter <= "z" end)
   end
 
   test "state does not change if won or lost" do
     for state <- [:won, :lost] do
-      game = Hangman.Impl.Game.new()
+      game = Hangman.new()
       game = Map.put(game, :game_state, state)
       {new_game, tally} = Hangman.make_guess(game, "t")
       assert new_game == game
@@ -31,9 +31,19 @@ defmodule HangmanTest do
   end
 
   test "state does not change if lost" do
-    game = Hangman.Impl.Game.new("test")
+    game = Hangman.new("test")
     game = Map.put(game, :game_state, :lost)
-    {new_game, tally} = Hangman.make_guess(game, "t")
+    {new_game, _tally} = Hangman.make_guess(game, "t")
     assert new_game == game
+  end
+
+  test "duplicate guesses are not allowed" do
+    game = Hangman.new()
+    {new_game, _tally} = Hangman.make_guess(game, "t")
+    assert new_game.game_state != :already_used
+    {new_game, _tally} = Hangman.make_guess(new_game, "r")
+    assert new_game.game_state != :already_used
+    {new_game, _tally} = Hangman.make_guess(new_game, "t")
+    assert new_game.game_state == :already_used
   end
 end
