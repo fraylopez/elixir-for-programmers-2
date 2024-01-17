@@ -84,6 +84,20 @@ defmodule HangmanTest do
     |> test_sequence()
   end
 
+  test "can handle a losing game" do
+    [
+      ["a", :bad_guess, 6, ["_", "_", "_", "_", "_"], ["a"]],
+      ["a", :already_used, 6, ["_", "_", "_", "_", "_"], ["a"]],
+      ["x", :bad_guess, 5, ["_", "_", "_", "_", "_"], ["a", "x"]],
+      ["y", :bad_guess, 4, ["_", "_", "_", "_", "_"], ["a", "x", "y"]],
+      ["z", :bad_guess, 3, ["_", "_", "_", "_", "_"], ["a", "x", "y", "z"]],
+      ["b", :bad_guess, 2, ["_", "_", "_", "_", "_"], ["a", "b", "x", "y", "z"]],
+      ["c", :bad_guess, 1, ["_", "_", "_", "_", "_"], ["a", "b", "c", "x", "y", "z"]],
+      ["d", :lost, 0, ["_", "_", "_", "_", "_"], ["a", "b", "c", "d", "x", "y", "z"]]
+    ]
+    |> test_sequence()
+  end
+
   def test_sequence(script) do
     game = Hangman.new("hello")
     Enum.reduce(script, game, &check_one_guess/2)
