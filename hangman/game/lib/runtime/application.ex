@@ -11,6 +11,6 @@ defmodule Hangman.Runtime.Application do
   end
 
   def start_game() do
-    DynamicSupervisor.start_child(@super_name, {Hangman.Runtime.Server, []})
+    DynamicSupervisor.start_child(@super_name, {Hangman.Runtime.Server, nil})
   end
 end
