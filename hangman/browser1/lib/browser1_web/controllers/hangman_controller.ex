@@ -7,14 +7,28 @@ defmodule Browser1Web.HangmanController do
 
   def new(conn, _params) do
     game = Hangman.new()
-    tally = Hangman.tally(game)
-    put_session(conn, :game, game)
-    render(conn, "game.html", tally: tally)
+
+    conn
+    |> put_session(:game, game)
+    |> redirect(to: Routes.hangman_path(conn, :show))
   end
 
-  def update(conn, %{"guess" => guess}) do
+  def update(conn, params) do
+    guess = params["make_move"]["guess"]
+
+    put_in(conn.params["make_move"]["guess"], "")
+    |> get_session(:game)
+    |> Hangman.make_guess(guess)
+
+    redirect(conn, to: Routes.hangman_path(conn, :show))
   end
 
   def show(conn, _params) do
+    tally =
+      conn
+      |> get_session(:game)
+      |> Hangman.tally()
+
+    render(conn, "game.html", tally: tally)
   end
 end
